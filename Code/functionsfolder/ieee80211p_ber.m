@@ -19,7 +19,7 @@ prm80211p = ieee80211p_init(chanBW);
 NB=400;
 
 %Rate-ID to determine type of modulation
-rateid=3
+rateid=1
 % Eb/No values (dB)
 EbNoVec = (0:5)';
 
@@ -58,7 +58,7 @@ for n = 1:length(EbNoVec)
         % ChannelMode = 1 - No Channel, 2 - AWGN, 3 - TDL, 4 - Nakagami-m
         % For Channel Mode 4, EbNoVec, does not refer to EbN0, It refers to the
         % transmitted power - Pt_dBm
-        ChannelMode = 4;
+        ChannelMode = 3;
         [rxSignal,Ch_Coef,NoiseVariance] = ieee80211pCHANNEL(txSignal,EbNoVec(n),rateid,ChannelMode,prm80211p);
                 
         %RX

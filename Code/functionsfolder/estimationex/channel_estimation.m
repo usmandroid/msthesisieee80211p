@@ -5,15 +5,19 @@ clc; clear all; close all; clf
 Nfft=32; Ng=Nfft/8; Nofdm=Nfft+Ng; Nsym=100;
 Nps=4; Np=Nfft/Nps; % Pilot spacing and number of pilots per OFDM symbol
 Nbps=4; M=2^Nbps; % Number of bits per (modulated) symbol
-mod_object = modem.qammod('M',M, 'SymbolOrder','gray');
-demod_object = modem.qamdemod('M',M, 'SymbolOrder','gray');
+% mod_object = modem.qammod('M',M, 'SymbolOrder','gray');
+% demod_object = modem.qamdemod('M',M, 'SymbolOrder','gray');
+% mod_object = qammod(M, 'gray');
+% demod_object = qamdemod(M,'gray');
+
 Es=1; A=sqrt(3/2/(M-1)*Es); % Signal energy and QAM normalization factor
 SNR = 30; sq2=sqrt(2); MSE = zeros(1,6); nose = 0;
 for nsym=1:Nsym
 Xp = 2*(randn(1,Np)>0)-1; % Pilot sequence generation
 %msgint=randint(1,Nfft-Np,M); % bit generation
 msgint=randi(1,Nfft-Np,M); % bit generation
-Data = A*modulate(mod_object,msgint);
+Data = A*qammod(msgint, M, 'gray');%modulate(mod_object,msgint);
+
 ip = 0; pilot_loc = [];
 for k=1:Nfft
 if mod(k,Nps)==1
@@ -55,7 +59,7 @@ for k=1:Nfft
 if mod(k,Nps)==1, ip=ip+1; else Data_extracted(k-ip)=Y_eq(k); end
 
 end
-msg_detected = demodulate(demod_object,Data_extracted/A);
+msg_detected = qamdemod(Data_extracted/A, M,'gray'); %demodulate(demod_object,Data_extracted/A);
 nose = nose + sum(msg_detected~=msgint);
 MSEs = MSE/(Nfft*Nsym);
 end
