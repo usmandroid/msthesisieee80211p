@@ -18,7 +18,7 @@ txLTS1 = txLTS2;
 rxWLTS = rxpreambleout.';
 %rxWLTS = rxpreambleout(161:321);
 rxL = length(rxWLTS);
-rxLTS = [2*0.5*txWLTS(1) txWLTS(2:rxL-1) 2*0.5*txWLTS(rxL)];
+rxLTS = [2*0.5*rxWLTS(1) rxWLTS(2:rxL-1) 2*0.5*rxWLTS(rxL)];
 
 rxLTS1 = [rxLTS(2*NFFT+1) rxLTS(2:NFFT)];
 rxLTS2 = rxLTS(NFFT+1:2*NFFT);
