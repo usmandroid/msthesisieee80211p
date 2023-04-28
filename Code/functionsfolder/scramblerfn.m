@@ -30,11 +30,14 @@ function output_bits = scramblerfn(input_bits, initial_state)
 
 
 %% CUSTOM BUILT SCRAMBLER
-
+% initial_state = [1 0 1 1 1 0 1];
+initial_state = [1 1 1 1 1 1 1];
+%When the all ones initial state is used, the 127-bit sequence generated repeatedly by the scrambler (left-most used first) is
 states = initial_state; 
 %example:[0 1 1 0 1 0 0] -> [MSB ... LSB] that means... [state7 ... state1]
-
-
+% input_bits = zeros(1,130);
+orig = [0 0 0 0 1 1 1 0  1 1 1 1 0 0 1 0  1 1 0 0 1 0 0 1  0 0 0 0 0 0 1 0  0 0 1 0 0 1 1 0  0 0 1 0 1 1 1 0  1 0 1 1 0 1 1 0  0 0 0 0 1 1 0 0  1 1 0 1 0 1 0 0  1 1 1 0 0 1 1 1  1 0 1 1 0 1 0 0  0 0 1 0 1 0 1 0  1 1 1 1 1 0 1 0  0 1 0 1 0 0 0 1  1 0 1 1 1 0 0 0  1 1 1 1 1 1 1 ];
+input_bits = orig;
 for n=1:length(input_bits)
     
     save_state_4 = states(4);
